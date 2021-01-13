@@ -2,11 +2,28 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <title>{% block title %}Papatissier-Agricole{% endblock %}</title>
+        {% block stylesheets %}
+            <link rel="stylesheet" href="/assets/css/app.css">
+        {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block body %}
+            <header>
+                <h1>Papatissier-Agricole</h1>
+            </header>
+            <footer>
+                <nav>
+                    <ul>
+                        <li><a href="">Qui sommes-nous</a></li>
+                        <li><a href="">Contactez-nous</a></li>
+                    </ul>
+                </nav>
+            </footer>
+        {% endblock %}
+
+        {% block javascripts %}
+            <script type="text/javascript" src"/assets/js/app.js"></script>
+        {% endblock %}
     </body>
 </html>
