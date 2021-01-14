@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Buyer;
+use App\Entity\Buyers;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Buyer|null find($id, $lockMode = null, $lockVersion = null)
- * @method Buyer|null findOneBy(array $criteria, array $orderBy = null)
- * @method Buyer[]    findAll()
- * @method Buyer[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Buyers|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Buyers|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Buyers[]    findAll()
+ * @method Buyers[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class BuyerRepository extends ServiceEntityRepository
+class BuyersRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Buyer::class);
+        parent::__construct($registry, Buyers::class);
     }
 
     // /**
-    //  * @return Buyer[] Returns an array of Buyer objects
+    //  * @return Buyers[] Returns an array of Buyers objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class BuyerRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Buyer
+    public function findOneBySomeField($value): ?Buyers
     {
         return $this->createQueryBuilder('b')
             ->andWhere('b.exampleField = :val')
