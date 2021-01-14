@@ -12,25 +12,25 @@ import './styles/map.css';
 // start the Stimulus application
 //import './bootstrap';
 
-
-
-// On initialise la latitude et la longitude de Paris (centre de la carte)
-var lat = 48.852969;
-var lon = 2.349903;
-var macarte = null;
-// Fonction d'initialisation de la carte
-function initMap() {
-    // Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
-    macarte = L.map('map').setView([lat, lon], 11);
-    // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
-    L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-        // Il est toujours bien de laisser le lien vers la source des données
-        attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
-        minZoom: 1,
-        maxZoom: 20
-    }).addTo(macarte);
-}
-window.onload = function(){
-// Fonction d'initialisation qui s'exécute lorsque le DOM est chargé
-initMap(); 
+// Nous initialisons une liste de marqueurs
+var villes = {
+	"Paris": { "lat": 48.852969, "lon": 2.349903 },
+	"Brest": { "lat": 48.383, "lon": -4.500 },
+	"Quimper": { "lat": 48.000, "lon": -4.100 },
+	"Bayonne": { "lat": 43.500, "lon": -1.467 }
 };
+// On initialise la carte
+var macarte = L.map('map').setView([48.852969, 2.349903], 13);
+// Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
+L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+    // Il est toujours bien de laisser le lien vers la source des données
+    attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+    minZoom: 1,
+    maxZoom: 20
+}).addTo(macarte);
+
+var marker = L.marker([48.852969, 2.349903]).addTo(macarte);
+marker.bindPopup("<p>Paris</p>");
+
+
+
