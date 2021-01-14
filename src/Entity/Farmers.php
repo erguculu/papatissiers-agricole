@@ -2,14 +2,12 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Farmers
  *
- * @ORM\Table(name="farmers")
+ * @ORM\Table(name="farmers", indexes={@ORM\Index(name="IDX_66E5D4168BAC62AF", columns={"city_id"})})
  * @ORM\Entity(repositoryClass="App\Repository\FarmersRepository")
  */
 class Farmers
@@ -22,12 +20,6 @@ class Farmers
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-    /**
-     * @ORM\ManyToOne (targetEntity=Cities::class, inversedBy="farmers")
-     * @ORM\JoinColumn (nullable=false)
-     */
-    private $city;
 
     /**
      * @var string|null
@@ -58,44 +50,14 @@ class Farmers
     private $farmSize;
 
     /**
-     * @ORM\OneToMany (targetEntity=Transactions::class, mappedBy="farmers")
+     * @var Cities
+     *
+     * @ORM\ManyToOne(targetEntity="Cities")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * })
      */
-    private $transactions;
-
-    public function __construct()
-    {
-        $this->transactions = new ArrayCollection();
-    }
-
-    /**
-     * @return Collection|Transactions[]
-     */
-    public function getTransactions(): Collection
-    {
-        return $this->transactions;
-    }
-
-    public function addTransaction(Transactions $transaction): self
-    {
-        if (!$this->transactions->contains($transaction)) {
-            $this->transactions[] = $transaction;
-            $transaction->setFarmer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTransaction(Transactions $transaction): self
-    {
-        if ($this->transactions->removeElement($transaction)) {
-            // set the owning side to null (unless already changed)
-            if ($transaction->getFarmer() === $this) {
-                $transaction->setFarmer(null);
-            }
-        }
-
-        return $this;
-    }
+    private $city;
 
     public function getId(): ?int
     {

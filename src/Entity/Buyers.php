@@ -2,14 +2,12 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Buyers
  *
- * @ORM\Table(name="buyers")
+ * @ORM\Table(name="buyers", indexes={@ORM\Index(name="IDX_49E2BD628BAC62AF", columns={"city_id"})})
  * @ORM\Entity(repositoryClass="App\Repository\BuyersRepository")
  */
 class Buyers
@@ -22,13 +20,6 @@ class Buyers
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-    /**
-     *
-     * @ORM\ManyToOne(targetEntity=Cities::class, inversedBy="buyers")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $city;
 
     /**
      * @var string|null
@@ -45,44 +36,14 @@ class Buyers
     private $type;
 
     /**
-     * @ORM\OneToMany (targetEntity=Transactions::class, mappedBy="buyer")
+     * @var Cities
+     *
+     * @ORM\ManyToOne(targetEntity="Cities")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * })
      */
-    private $transactions;
-
-    public function __construct()
-    {
-        $this->transactions = new ArrayCollection();
-    }
-
-    /**
-     * @return Collection|Transactions[]
-     */
-    public function getTransactions(): Collection
-    {
-        return $this->transactions;
-    }
-
-    public function addTransaction(Transactions $transaction): self
-    {
-        if (!$this->transactions->contains($transaction)) {
-            $this->transactions[] = $transaction;
-            $transaction->setBuyer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTransaction(Transactions $transaction): self
-    {
-        if ($this->transactions->removeElement($transaction)) {
-            // set the owning side to null (unless already changed)
-            if ($transaction->getBuyer() === $this) {
-                $transaction->setBuyer(null);
-            }
-        }
-
-        return $this;
-    }
+    private $city;
 
     public function getId(): ?int
     {

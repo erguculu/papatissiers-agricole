@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Transactions
  *
- * @ORM\Table(name="transactions")
+ * @ORM\Table(name="transactions", indexes={@ORM\Index(name="IDX_EAA81A4C13481D2B", columns={"farmer_id"}), @ORM\Index(name="IDX_EAA81A4C4584665A", columns={"product_id"}), @ORM\Index(name="IDX_EAA81A4C6C755722", columns={"buyer_id"})})
  * @ORM\Entity(repositoryClass="App\Repository\TransactionsRepository")
  */
 class Transactions
@@ -20,28 +20,6 @@ class Transactions
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-    /**
-     * @var int
-     *
-     * @ORM\ManyToOne (targetEntity=Products::class, inversedBy="transactions")
-     * @ORM\JoinColumn (nullable=false)
-     */
-    private $product;
-
-    /**
-     * @var int
-     * @ORM\ManyToOne  (targetEntity=Farmers::class, inversedBy="transactions")
-     * @ORM\JoinColumn  (nullable=false)
-     */
-    private $farmer;
-
-    /**
-     * @var int
-     * @ORM\ManyToOne  (targetEntity=Buyers::class, inversedBy="transactions")
-     * @ORM\JoinColumn (nullable=false)
-     */
-    private $buyer;
 
     /**
      * @var string|null
@@ -63,6 +41,36 @@ class Transactions
      * @ORM\Column(name="quantity", type="float", precision=10, scale=0, nullable=true)
      */
     private $quantity;
+
+    /**
+     * @var Farmers
+     *
+     * @ORM\ManyToOne(targetEntity="Farmers")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="farmer_id", referencedColumnName="id")
+     * })
+     */
+    private $farmer;
+
+    /**
+     * @var Products
+     *
+     * @ORM\ManyToOne(targetEntity="Products")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     * })
+     */
+    private $product;
+
+    /**
+     * @var Buyers
+     *
+     * @ORM\ManyToOne(targetEntity="Buyers")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="buyer_id", referencedColumnName="id")
+     * })
+     */
+    private $buyer;
 
     public function getId(): ?int
     {
@@ -105,19 +113,7 @@ class Transactions
         return $this;
     }
 
-    public function getProduct(): int
-    {
-        return $this->product;
-    }
-
-    public function setProduct(?Products $product): self
-    {
-        $this->product = $product;
-
-        return $this;
-    }
-
-    public function getFarmer(): int
+    public function getFarmer(): ?Farmers
     {
         return $this->farmer;
     }
@@ -129,7 +125,19 @@ class Transactions
         return $this;
     }
 
-    public function getBuyer(): int
+    public function getProduct(): ?Products
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?Products $product): self
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    public function getBuyer(): ?Buyers
     {
         return $this->buyer;
     }
@@ -140,4 +148,6 @@ class Transactions
 
         return $this;
     }
+
+
 }
