@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,46 +34,6 @@ class Products
      * @ORM\Column(name="category", type="text", length=65535, nullable=true)
      */
     private $category;
-
-    /**
-     * @ORM\OneToMany (targetEntity=Transactions::class, mappedBy="product")
-     */
-    private $transactions;
-
-    public function __construct()
-    {
-        $this->transactions = new ArrayCollection();
-    }
-
-    /**
-     * @return Collection|Transactions[]
-     */
-    public function getTransactions(): Collection
-    {
-        return $this->transactions;
-    }
-
-    public function addTransaction(Transactions $transaction): self
-    {
-        if (!$this->transactions->contains($transaction)) {
-            $this->transactions[] = $transaction;
-            $transaction->setProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTransaction(Transactions $transaction): self
-    {
-        if ($this->transactions->removeElement($transaction)) {
-            // set the owning side to null (unless already changed)
-            if ($transaction->getProduct() === $this) {
-                $transaction->setProduct(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getId(): ?int
     {
