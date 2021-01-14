@@ -13,11 +13,12 @@ import './styles/map.css';
 //import './bootstrap';
 
 // Nous initialisons une liste de marqueurs
+var ville = "";
 var villes = {
-	"Paris": { "lat": 48.852969, "lon": 2.349903 },
-	"Brest": { "lat": 48.383, "lon": -4.500 },
-	"Quimper": { "lat": 48.000, "lon": -4.100 },
-	"Bayonne": { "lat": 43.500, "lon": -1.467 }
+    "Paris": { "lat": 48.852969, "lon": 2.349903 },
+    "Brest": { "lat": 48.383, "lon": -4.500 },
+    "Quimper": { "lat": 48.000, "lon": -4.100 },
+    "Bayonne": { "lat": 43.500, "lon": -1.467 }
 };
 // On initialise la carte
 var macarte = L.map('map').setView([48.852969, 2.349903], 13);
@@ -29,8 +30,8 @@ L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
     maxZoom: 20
 }).addTo(macarte);
 
-var marker = L.marker([48.852969, 2.349903]).addTo(macarte);
-marker.bindPopup("<p>Paris</p>");
-
-
-
+// Nous parcourons la liste des villes
+for (ville in villes) {
+    var marker = L.marker([villes[ville].lat, villes[ville].lon]).addTo(macarte);
+    marker.bindPopup("<p>" + ville + "</p>");
+}

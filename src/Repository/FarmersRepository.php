@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Farmer;
+use App\Entity\Farmers;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Farmer|null find($id, $lockMode = null, $lockVersion = null)
- * @method Farmer|null findOneBy(array $criteria, array $orderBy = null)
- * @method Farmer[]    findAll()
- * @method Farmer[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Farmers|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Farmers|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Farmers[]    findAll()
+ * @method Farmers[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class FarmerRepository extends ServiceEntityRepository
+class FarmersRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Farmer::class);
+        parent::__construct($registry, Farmers::class);
     }
 
     // /**
-    //  * @return Farmer[] Returns an array of Farmer objects
+    //  * @return Farmers[] Returns an array of Farmers objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class FarmerRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Farmer
+    public function findOneBySomeField($value): ?Farmers
     {
         return $this->createQueryBuilder('f')
             ->andWhere('f.exampleField = :val')
